@@ -1,6 +1,8 @@
 import AWS from 'aws-sdk';
+import {getToken} from 'next-auth/jwt';
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
+const JWt_SECRET = process.env.JWT_SECRET;
 
 function generateUniqueId() {
     const now = Date.now();
@@ -8,9 +10,10 @@ function generateUniqueId() {
   }
 export default async function handler(req, res) {
     if (req.method === 'POST') {
+        const token = await getToken({req, secret: JWt_SECRET.toString()});
         // Logique pour ajouter un rapport
         const { Thème, Date, Avancement, Tâche } = req.body;
-
+       
         const params = {
             TableName: 'WorkRapport',
             Item: {
@@ -19,7 +22,7 @@ export default async function handler(req, res) {
                 Date: Date,
                 Avancement: Avancement.toString(),
                 Tâche: Tâche,
-                personId: "hmizitamim@hotmail.com",
+                personId: token.email,
             },
         };
 
@@ -31,8 +34,9 @@ export default async function handler(req, res) {
             res.status(500).json({ error: 'Failed to add rapport' });
         }
     } else if (req.method === 'GET') {
-        const personId = "hmizitamim@hotmail.com";
-
+        const token = await getToken({req, secret: JWt_SECRET.toString()});
+        const personId = token.email;
+        console.log(token.email);
         const params = {
             TableName: 'WorkRapport',
             FilterExpression: 'personId = :personId',

@@ -13,7 +13,7 @@ spec:
         app: InternRFC-app-work-user
     spec:
       containers:
-      - name: Work-User-container
-        image: 533267283761.dkr.ecr.eu-central-1.amazonaws.com/workrapport-user:latest
+      - name: work-wser-container
+        image: 533267283761.dkr.ecr.eu-central-1.amazonaws.com/workrapport-user
         ports:
         - containerPort: 3000
