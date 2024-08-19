@@ -3,8 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import {Providers} from './providers'
 import { fonts } from './fonts'
-import Footer from '@/component/footer/page';
-import Navbar from '@/component/navbar/page';
+import Footer from '@/component/footer/Footer';
+import Navbar from '@/component/navbar/Navbar';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,9 +24,11 @@ export default function RootLayout({
   return (
     <html lang='en' className={fonts.rubik.variable}>
       <body>
-       
-        <main><Providers>{children}</Providers></main>
-       
+        <Providers>
+          <Navbar/>
+        <main>{children}</main>
+           <Footer/>
+        </Providers>
       </body>
     </html>
   );
