@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: work-user-service
 spec:
+  type: LoadBalancer
   selector:
     app: InternRFC-app-work-user
   ports:
